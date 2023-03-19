@@ -1,0 +1,60 @@
+﻿@page
+@model RediRND.Pages.Containers.IndexModel
+
+@{
+    ViewData["Title"] = "Containers";
+}
+
+<h1>List of Containers</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Parent Container
+            </th>
+            <th>
+                Stake
+            </th>
+            <th>
+                Weight
+            </th>
+            <th>
+                Local Stake
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Container) {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @( item.Parent == null ? "***No Parent" : item.Parent.Name )
+            </td>
+            <td>
+                @item.Stake.ToString("F5")
+            </td>
+            <td>
+                @item.Weight
+            </td>
+            <td>
+                @item.LocalStake.ToString("F5")
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

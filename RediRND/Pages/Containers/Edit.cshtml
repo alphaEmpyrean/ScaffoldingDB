@@ -1,0 +1,48 @@
+﻿@page "/Containers/{id:int}/Edit"
+@model RediRND.Pages.Containers.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Container</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Container.Id" />
+            <input type="hidden" asp-for="Container.Stake" />
+            <input type="hidden" asp-for="Container.LocalStake" />
+            
+            <div class="form-group">
+                <label asp-for="Container.ParentId" class="control-label"></label>
+                <select class="form-control" asp-for="Container.ParentId" asp-items="ViewBag.ParentSelectList"></select>
+                <span asp-validation-for="Container.ParentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Container.Name" class="control-label"></label>
+                <input asp-for="Container.Name" class="form-control" />
+                <span asp-validation-for="Container.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Container.Weight" class="control-label"></label>
+                <input asp-for="Container.Weight" class="form-control" />
+                <span asp-validation-for="Container.Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

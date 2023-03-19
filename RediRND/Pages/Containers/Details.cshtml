@@ -1,0 +1,167 @@
+﻿@page "/Containers/{id:int}"
+@model RediRND.Pages.Containers.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Container</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Name
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Container.Name
+        </dd>
+        <dt class="col-sm-2">
+            Parent Container
+        </dt>
+        <dd class="col-sm-10">
+
+            @( Model.Container.Parent == null ? "***No Parent" : Model.Container.Parent.Name) @if(Model.Container.Parent != null) {<a asp-page="./Details" asp-route-id="@Model.Container.ParentId">Details</a>}
+        </dd>
+        <dt class="col-sm-2">
+            Stake
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Container.Stake.ToString("F5")
+        </dd>
+        <dt class="col-sm-2">
+            Weight
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Container.Weight
+        </dd>
+        <dt class="col-sm-2">
+            Local Stake
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Container.LocalStake.ToString("F5")
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Container.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
+<div>
+    @if (Model.Container != null)
+    {
+        <p></p>
+        <h4>Child Items</h4>
+        <div>
+            <a asp-page="./ChildOperations/AddStaker" asp-route-id="@Model.Container.Id">Add Staker</a> |
+            <a asp-page="./ChildOperations/AddContainer" asp-route-id="@Model.Container.Id">Add Container</a>
+        </div>
+        <hr />
+        @if (Model.Container.InverseParent.Count != 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Container Name
+                        </th>
+                        <th>
+                            Stake
+                        </th>
+                        <th>
+                            Weight
+                        </th>
+                        <th>
+                            Local Stake
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.Container.InverseParent)
+                    {
+                        <tr>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.Stake.ToString("F5")
+                            </td>
+                            <td>
+                                @item.Weight
+                            </td>
+                            <td>
+                                @item.LocalStake.ToString("F5")
+                            </td>
+                            <td>
+                                <a asp-page="./ChildOperations/EditContainer" asp-route-id="@Model.Container.Id" asp-route-childId="@item.Id">Edit Weight</a> |
+                                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-page="./ChildOperations/RemoveContainer" asp-route-id="@Model.Container.Id" asp-route-childId="@item.Id">Remove</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        @if (Model.Container.ContainerMemberships.Count != 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Username
+                        </th>
+                        <th>
+                            First Name
+                        </th>
+                        <th>
+                            Last Name
+                        </th>
+                        <th>
+                            Weight
+                        </th>
+                        <th>
+                            Local Stake
+                        </th>
+                        <th>
+                            Stake
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.Container.ContainerMemberships)
+                    {
+                        <tr>
+                            <td>
+                                 @item.Staker.Username
+                            </td>
+                            <td>
+                                @item.Staker.FirstName
+                            </td>
+                            <td>
+                                @item.Staker.LastName
+                            </td>
+                            <td>
+                                @item.Weight
+                            </td>
+                            <td>
+                                @item.LocalStake.ToString("F5")
+                            </td>
+                            <td>
+                                @item.Stake.ToString("F5")
+                            </td>
+                            <td>
+                                <a asp-page="./ChildOperations/EditStaker" asp-route-id="@Model.Container.Id" asp-route-childId="@item.Staker.Id">Edit Weight</a> |
+                                <a asp-page="./ChildOperations/RemoveStaker" asp-route-id="@Model.Container.Id" asp-route-childId="@item.Staker.Id">Remove</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>            
+        }
+    }
+</div>

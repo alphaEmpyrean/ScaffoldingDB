@@ -1,0 +1,42 @@
+﻿@page "/Containers/{id:int}/RemoveStaker/{childId:int}"
+@model RediRND.Pages.Containers.RemoveChildStakerModel
+
+@{
+    ViewData["Title"] = "Remove Staker";
+}
+
+<h1>Remove Staker</h1>
+
+<h3>Are you sure you want to remove this Staker from the container?</h3>
+<div>
+    <h4>Container Membership</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Username
+        </dt>
+        <dd class="col-sm-10">
+            @Model.ContainerMembership.Staker.Username
+        </dd>
+        <dt class="col-sm-2">
+            First Name
+        </dt>
+        <dd class="col-sm-10">
+            @Model.ContainerMembership.Staker.FirstName
+        </dd>
+        <dt class="col-sm-2">
+            Last Name
+        </dt>
+        <dd class="col-sm-10">
+            @Model.ContainerMembership.Staker.LastName
+        </dd>
+    </dl>
+
+    
+    <form method="post">
+        <input type="hidden" asp-for="ContainerMembership.ContainerId" />
+        <input type="hidden" asp-for="ContainerMembership.StakerId" />
+        <input type="submit" value="Remove" class="btn btn-danger" /> |
+        <a asp-page="../Details" asp-route-id="@Model.ContainerMembership.ContainerId">Back</a>
+    </form>
+</div>

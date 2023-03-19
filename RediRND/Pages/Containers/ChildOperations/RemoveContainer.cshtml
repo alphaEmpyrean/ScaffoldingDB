@@ -1,0 +1,40 @@
+﻿@page "/Containers/{id:int}/RemoveContainer/{childId:int}"
+@model RediRND.Pages.Containers.RemoveChildContainerModel
+
+@{
+    ViewData["Title"] = "RemoveChildContainer";
+}
+
+<h1>RemoveChildContainer</h1>
+
+<h4>Container</h4>
+<hr />
+<dl class="row">
+    <dt class="col-sm-2">
+        Parent
+    </dt>
+    <dd class="col-sm-10">
+    @ViewBag.ChildContainer.ParentId
+    </dd>
+    <dt class="col-sm-2">
+        Name
+    </dt>
+    <dd class="col-sm-10">
+        @ViewBag.ChildContainer.Name
+    </dd>
+</dl>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="submit" value="Remove" class="btn btn-danger" /> |
+                <a asp-page="../Details" asp-route-id="@ViewBag.ChildContainer.ParentId">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

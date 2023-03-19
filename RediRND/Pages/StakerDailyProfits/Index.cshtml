@@ -1,0 +1,48 @@
+﻿@page
+@model RediRND.Pages.StakerDailyProfits.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StakerDailyProfit[0].Stake)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StakerDailyProfit[0].Profit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StakerDailyProfit[0].Staker)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.StakerDailyProfit) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stake)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Staker.Id)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
